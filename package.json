@@ -1,0 +1,16 @@
+{
+  "name": "runcloud",
+  "version": "2.0.0",
+  "description": "CLI tool to provision WordPress on RunCloud via API v3.",
+  "main": "cli.js",
+  "bin": {
+    "create-wp": "./cli.js"
+  },
+  "scripts": {
+    "start": "node cli.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "yargs": "^18.0.0"
+  }
+}
