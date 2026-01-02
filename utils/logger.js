@@ -1,5 +1,6 @@
 /**
  * Presentation layer for CLI output.
+ * standardized logging with icons and formatting.
  */
 
 const Logger = {

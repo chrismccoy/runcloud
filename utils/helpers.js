@@ -26,7 +26,7 @@ function generateDbPass(length = 24) {
   for (let i = 0, n = charset.length; i < length; ++i) {
     retVal += charset.charAt(Math.floor(Math.random() * n));
   }
-  return retVal + "1A"; 
+  return retVal + "1A";
 }
 
 /**
@@ -38,7 +38,7 @@ function generateId() {
 
 /**
  * Asynchronous sleep helper.
- * Used to pause execution to allow for remote server propagation
+ * Used to pause execution to allow for remote server propagation.
  */
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));

@@ -8,10 +8,10 @@ const { Logger } = require('./utils/logger');
   try {
     // Initialize Configuration
     const configManager = new ConfigManager();
-    
+
     // Inject Config into Service Layer
     const service = new ProvisioningService(configManager);
-    
+
     // Run
     await service.run();
 

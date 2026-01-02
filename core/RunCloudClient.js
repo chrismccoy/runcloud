@@ -6,8 +6,7 @@ const CONSTANTS = require('../config/constants');
 
 class RunCloudClient {
   /**
-   * apiKey - Bearer token.
-   * serverId - Target server ID.
+   * Creates an instance of the client.
    */
   constructor(apiKey, serverId) {
     this.apiKey = apiKey;
@@ -15,10 +14,17 @@ class RunCloudClient {
   }
 
   /**
-   * Provisions a WebApp container and installs WordPress.
+   * Provisions a standard WordPress WebApp.
    */
   async createWordPress(payload) {
     return this._request(`/servers/${this.serverId}/webapps/wordpress`, 'POST', payload);
+  }
+
+  /**
+   * Provisions a Custom (Empty) WebApp.
+   */
+  async createCustomWebApp(payload) {
+    return this._request(`/servers/${this.serverId}/webapps/custom`, 'POST', payload);
   }
 
   /**
@@ -35,7 +41,7 @@ class RunCloudClient {
   }
 
   /**
-   * Retrieves list of domains for a WebApp to find the internal Domain ID.
+   * Retrieves list of domains for a WebApp to find the internal Domain ID
    */
   async getDomains(webAppId) {
     return this._request(`/servers/${this.serverId}/webapps/${webAppId}/domains`, 'GET');
@@ -59,7 +65,7 @@ class RunCloudClient {
 
   /**
    * Updates PHP-FPM / Nginx Settings via PATCH.
-   * Used to modify disabled functions
+   * Used to modify disabled functions.
    */
   async updateFpmSettings(webAppId, payload) {
     return this._request(
@@ -70,7 +76,7 @@ class RunCloudClient {
   }
 
   /**
-   * Wrapper for Fetch API.
+   * Wrapper for the Fetch API.
    */
   async _request(endpoint, method, body = null) {
     const url = `${CONSTANTS.API_BASE}${endpoint}`;
@@ -107,6 +113,7 @@ class RunCloudClient {
       case 403: throw new Error(`Permission Denied (403): Credentials valid but access denied. Check RC_SERVER_ID.`);
       case 422:
         let detailStr = '';
+        // Parse validation errors array into a readable string
         if (data.errors) detailStr = '\n   ' + Object.keys(data.errors).map(k => `${k}: ${data.errors[k].join(', ')}`).join('\n   ');
         throw new Error(`Validation Error (422): ${msg}${detailStr}`);
       default: throw new Error(`API Error (${status}): ${msg}`);

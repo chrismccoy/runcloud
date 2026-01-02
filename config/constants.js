@@ -1,5 +1,6 @@
 /**
  * Centralized constants and configuration.
+ * Defines supported stacks, versions, and default behaviors for the CLI.
  */
 
 module.exports = Object.freeze({
@@ -7,11 +8,22 @@ module.exports = Object.freeze({
   API_BASE: 'https://manage.runcloud.io/api/v3',
 
   /**
+   * Supported Application Types.
+   * Determines the provisioning strategy.
+   */
+  APP_TYPES: {
+    WORDPRESS: 'wordpress',
+    CUSTOM: 'custom'
+  },
+
+  /**
    * Supported Server Stacks mapping.
+   * Maps CLI/Config values to API-compatible strings.
    */
   STACKS: {
-    nginx: 'nativenginx', // Pure Nginx
-    apache: 'hybrid',     // Nginx + Apache Proxy
+    nginx: 'nativenginx', // Pure Nginx (Used for WordPress)
+    apache: 'hybrid',     // Nginx + Apache Proxy (Used for WordPress)
+    custom: 'customnginx' // Custom Web App (Forced for Custom Apps)
   },
 
   /**
@@ -25,16 +37,17 @@ module.exports = Object.freeze({
     '8.2': 'php82rc',
     '8.3': 'php83rc',
     '8.4': 'php84rc',
-//    '8.5': 'php85rc', coming soon?
   },
 
   /** Application Defaults */
   DEFAULTS: {
-    USER: 'admin',
+    // General
+    TYPE: 'wordpress',
+    USER: 'admin',      // Default WP Admin Username
     PHP: '8.2',
     STACK: 'nginx',
 
-    // Hub Defaults
+    // Hub Defaults (WordPress Only)
     INSTALL_HUB: true,
     HUB_TYPE: 'native',
     REDIS_OBJ: false,
@@ -46,3 +59,4 @@ module.exports = Object.freeze({
     UNRESTRICTED_PHP: false
   }
 });
+
